@@ -1,0 +1,61 @@
+# depslib dependency file v1.0
+1691324576 source:c:\users\buixu\onedrive\documents\c++\project\ter\t\main.cpp
+	"game.hpp"
+
+1691324662 c:\users\buixu\onedrive\documents\c++\project\ter\t\game.hpp
+	"defines.hpp"
+	"fallingpiece.hpp"
+
+1691314218 c:\users\buixu\onedrive\documents\c++\project\ter\t\defines.hpp
+
+1691325340 c:\users\buixu\onedrive\documents\c++\project\ter\t\fallingpiece.hpp
+	"defines.hpp"
+	"shapegenerator.hpp"
+	<SDL_scancode.h>
+	<SDL_timer.h>
+
+1691314218 c:\users\buixu\onedrive\documents\c++\project\ter\t\shapegenerator.hpp
+	"defines.hpp"
+	<random>
+
+1691314218 source:c:\users\buixu\onedrive\documents\c++\project\ter\t\fallingpiece.cpp
+	"defines.hpp"
+	"fallingpiece.hpp"
+	"graphics.hpp"
+	"input.hpp"
+
+1691324407 c:\users\buixu\onedrive\documents\c++\project\ter\t\graphics.hpp
+	"defines.hpp"
+	<SDL.h>
+	<SDL_ttf.h>
+
+1691315333 c:\users\buixu\onedrive\documents\c++\project\ter\t\input.hpp
+	<SDL.h>
+
+1691324662 source:c:\users\buixu\onedrive\documents\c++\project\ter\t\game.cpp
+	"defines.hpp"
+	"game.hpp"
+	"graphics.hpp"
+	"input.hpp"
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+
+1691314218 source:c:\users\buixu\onedrive\documents\c++\project\ter\t\input.cpp
+	"input.hpp"
+
+1691324381 source:c:\users\buixu\onedrive\documents\c++\project\ter\t\graphics.cpp
+	"graphics.hpp"
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	"defines.hpp"
+
+1691314218 source:c:\users\buixu\onedrive\documents\c++\project\ter\t\shapegenerator.cpp
+	"shapegenerator.hpp"
+
+1691314218 source:c:\users\buixu\onedrive\documents\c++\project\ter\t\states.cpp
+	"defines.hpp"
+
