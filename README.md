@@ -31,5 +31,6 @@ My Tetris clone in C++ with SDL2.
   * [Down-Arrow] - Move piece one row down
   * [UP-Aroww] - Rotate piece counter-clockwise
   * [Space] - Drop piece
+  
   *[p]-pause
-LINK https://github.com/yuvalalon510/tetris-cpp-sdl2
+ LINK https://github.com/yuvalalon510/tetris-cpp-sdl2
