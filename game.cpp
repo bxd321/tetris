@@ -15,39 +15,59 @@ Game::~Game() {
     SDL_Quit();
 }
 void Game::showStartScreen() {
-    SDL_Surface* startScreenImageSurface = IMG_Load("tetris.png");
-    if (!startScreenImageSurface) {
-        // Handle the error if the image loading fails
-        // Example: SDL_Log("Unable to load image: %s\n", IMG_GetError());
-        // You may want to return or exit the function or the game here.
-    }
-
+    SDL_Surface* startScreenImageSurface = IMG_Load("t.png");
     SDL_Texture* startScreenImageTexture = SDL_CreateTextureFromSurface(Graphics::getRenderer(), startScreenImageSurface);
     SDL_FreeSurface(startScreenImageSurface);
 
     bool started = false;
+    bool playClicked = false;
     while (!started) {
         Graphics::preRender();
-        Graphics::drawBlock(1, 100, 100); // Render a block on the screen for demonstration
-
-        // Render the image on the screen
         SDL_RenderCopy(Graphics::getRenderer(), startScreenImageTexture, nullptr, nullptr);
+
+        SDL_Rect playButtonRect = {PLAY_BUTTON_X, PLAY_BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT};
+        SDL_RenderFillRect(Graphics::getRenderer(), &playButtonRect);
+
+        SDL_Color textColor = {255, 255, 255};
+        std::string playButtonText = "Play Game";
+        SDL_Surface* playButtonSurface = TTF_RenderText_Solid(Graphics::getFont(), playButtonText.c_str(), textColor);
+        SDL_Texture* playButtonTexture = SDL_CreateTextureFromSurface(Graphics::getRenderer(), playButtonSurface);
+        SDL_Rect playTextRect = {(PLAY_BUTTON_X + BUTTON_WIDTH / 2) - 50, PLAY_BUTTON_Y + BUTTON_HEIGHT / 2 - 15, 100, 30};
+        SDL_RenderCopy(Graphics::getRenderer(), playButtonTexture, nullptr, &playTextRect);
+        SDL_FreeSurface(playButtonSurface);
+        SDL_DestroyTexture(playButtonTexture);
 
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
                 started = true;
-            } else if (event.type == SDL_KEYDOWN) {
-                started = true;
+            } else if (event.type == SDL_KEYDOWN || event.type == SDL_MOUSEBUTTONDOWN) {
+                int mouseX, mouseY;
+                SDL_GetMouseState(&mouseX, &mouseY);
+
+                // Check if the "Play Game" button was clicked
+                if (mouseX >= PLAY_BUTTON_X && mouseX <= PLAY_BUTTON_X + BUTTON_WIDTH &&
+                    mouseY >= PLAY_BUTTON_Y && mouseY <= PLAY_BUTTON_Y + BUTTON_HEIGHT) {
+                    playClicked = true;
+                    started = true;
+                }
             }
         }
 
+
         Graphics::renderScore();
         Graphics::present();
-        SDL_Delay(10);
+        if(playClicked){
+        spawnPiece();
+        while (running){
+           handleEvents();
+           update();
+           render();
+        }
+       }
+        SDL_Delay(200);
     }
-
     SDL_DestroyTexture(startScreenImageTexture);
 }
 
@@ -66,7 +86,6 @@ bool Game::init() {
 
 void Game::start() {
     showStartScreen();
-    spawnPiece();
     Graphics::updateScore(0);
 }
 
@@ -132,23 +151,30 @@ void Game::handleEvents() {
 
     while (SDL_PollEvent(&event)) {
         switch(event.type) {
-        case SDL_QUIT:
-            running = false;
-            break;
+            case SDL_QUIT:
+                running = false;
+                break;
+            case SDL_KEYDOWN:
+                if (event.key.keysym.sym == SDLK_p) {
+                    paused = !paused;
+                }
+                break;
         }
     }
 }
 
+
 void Game::update() {
-    fallingPiece.update();
+    if (!paused) {
+        fallingPiece.update();
 
-    if (fallingPiece.isLocked()) {
-        if (!placePiece())
-            running = false;
-        spawnPiece();
-        score += clearLines();
+        if (fallingPiece.isLocked()) {
+            if (!placePiece())
+                running = false;
+            spawnPiece();
+            score += clearLines();
+        }
     }
-
 }
 
 void Game::render() {
@@ -164,16 +190,6 @@ void Game::render() {
 
     SDL_Delay(gameDoClearDelay * 250);
 }
-
-//void Game::sleep() {
-//    Uint32 ticks = SDL_GetTicks();
-//
-//    Uint32 deltaTime = SDL_GetTicks() - ticks;
-//    if (deltaTime < FRAME_TICKS)
-//        SDL_Delay(FRAME_TICKS - deltaTime);
-//
-//    ticks = SDL_GetTicks();
-//}
 
 void Game::renderBoard() {
     bool doClearDelay = false;
@@ -200,7 +216,6 @@ void Game::renderBoard() {
 void Game::showGameOverScreen() {
     Graphics::preRender();
 
-    // Render the game over text
     SDL_Color textColor = {255, 255, 255};
     std::string gameOverText = "Game Over";
     SDL_Surface* gameOverSurface = TTF_RenderText_Solid(Graphics::getFont(), gameOverText.c_str(), textColor);
@@ -212,7 +227,6 @@ void Game::showGameOverScreen() {
     SDL_FreeSurface(gameOverSurface);
     SDL_DestroyTexture(gameOverTexture);
 
-    // Render the final score
     std::string finalScoreText = "Final Score: " + std::to_string(score);
     SDL_Surface* finalScoreSurface = TTF_RenderText_Solid(Graphics::getFont(), finalScoreText.c_str(), textColor);
     SDL_Texture* finalScoreTexture = SDL_CreateTextureFromSurface(Graphics::getRenderer(), finalScoreSurface);
@@ -225,5 +239,5 @@ void Game::showGameOverScreen() {
 
     Graphics::renderScore();
     Graphics::present();
-    SDL_Delay(5000); // Delay to display the game over screen for 5 seconds before quitting
-}
+    SDL_Delay(500);
+    }

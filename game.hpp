@@ -13,14 +13,22 @@ public:
     void handleEvents();
     void update();
     void render();
-    bool isRunning() {return running;};
+    bool isRunning() const { return running; }
     void showGameOverScreen();
+    void pause() {
+    paused = !paused;};
+    bool isPaused() {
+    return paused;};
+    std::vector<int> scoreHistory;
+    void displayScoreHistory();
+
 //    void sleep();
 
 private:
     int board[ROWS][COLS] = {0};
     int occupiedBlocks[ROWS] = {0};
     bool running = true;
+    bool paused = true;
     int score = 0;
     bool gameDoClearDelay = false;
     FallingPiece fallingPiece;

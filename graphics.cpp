@@ -119,4 +119,5 @@ SDL_Renderer* Graphics::getRenderer() {
 }
 TTF_Font* Graphics::getFont() {
     return font;
+
 }

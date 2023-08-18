@@ -50,9 +50,8 @@
 		<Unit filename="shapegenerator.cpp" />
 		<Unit filename="shapegenerator.hpp" />
 		<Unit filename="states.cpp" />
-		<Unit filename="t.cbp" />
-		<Unit filename="t.depend" />
-		<Unit filename="t.layout" />
+		<Unit filename="tetris.depend" />
+		<Unit filename="tetris.layout" />
 		<Unit filename="tetris.png" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

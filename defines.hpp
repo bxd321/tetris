@@ -22,8 +22,10 @@
 #define FPS             60
 #define FRAME_TICKS     1000 / FPS
 #define KEY_HOLD_DELAY  200
-
-
+const int PLAY_BUTTON_X = WIN_WIDTH / 2 - 100;
+const int PLAY_BUTTON_Y = WIN_HEIGHT / 2 + 200;
+const int BUTTON_WIDTH = 200;
+const int BUTTON_HEIGHT = 50;
 enum Shape {
     I=1, O, T, S, Z, J, L
 };

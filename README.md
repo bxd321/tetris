@@ -29,5 +29,6 @@ My Tetris clone in C++ with SDL2.
 # Controls
   * [Left-Arrow]/[Right-Arrow] - Move piece left/right
   * [Down-Arrow] - Move piece one row down
-  * [A]/[D] - Rotate piece counter-clockwise/clockwise
+  * [UP-Aroww] - Rotate piece counter-clockwise
   * [Space] - Drop piece
+  *[p]-pause
